@@ -38,7 +38,6 @@ class PA_Access_Helper_Data extends Mage_Core_Helper_Abstract
         $currentDateTime = $dateTimeNow;
         $startDateTime = sprintf('%s %s', $dateNow, $startRestriction);
 
-
         if ($startRestriction <= $endRestriction) {
             $endDateTime = sprintf('%s %s', $dateNow, $endRestriction);
             $previousDate = $dateTime->modify('-1 day')->format('Y-m-d');
