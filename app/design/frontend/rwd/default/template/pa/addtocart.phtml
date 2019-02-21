@@ -1,0 +1,40 @@
+<?php
+
+    $_product = $this->getProduct();
+    $productCategory = $_product->getCategoryIds();
+
+    $helper = Mage::helper('access');
+    $isRestriction = $helper->isRestrictionCategory($productCategory);
+
+    $startRestrictionFieldInfo = Mage::getStoreConfig('access/settings/start_restriction');
+    $endRestrictionFieldInfo = Mage::getStoreConfig('access/settings/end_restriction');
+
+    $startRestriction = strtr($startRestrictionFieldInfo, ",", ":");
+    $endRestriction = strtr($endRestrictionFieldInfo, ",", ":");
+
+    $restriction = $helper->getRestriction($startRestriction, $endRestriction);
+
+    if ($restriction['currentDateTime'] >= $restriction['startDateTime']
+        && $restriction['currentDateTime'] <= $restriction['endDateTime'] && $isRestriction) {
+        echo '<div class="add-to-cart-buttons"><strong>Sorry, you cant buy this product until '.substr($endRestriction, 0, -3).'</strong></div>';
+    } else if($restriction['currentDateTime'] < $restriction['startDateTime']
+        && $restriction['currentDateTime'] < $restriction['previousDayEnd'] && $isRestriction){
+        echo '<div class="add-to-cart-buttons"><strong>Sorry, you cant buy this product until '.substr($endRestriction, 0, -3).'</strong></div>';
+    } else {
+?>
+<?php $buttonTitle = Mage::helper('core')->quoteEscape($this->__('Add to Cart')); ?>
+<?php if($_product->isSaleable() || $_product ->getTypeId() == 'configurable'): ?>
+    <div class="add-to-cart">
+        <?php if(!$_product->isGrouped()): ?>
+            <div class="qty-wrapper">
+                <label for="qty"><?php echo $this->__('Qty:') ?></label>
+                <input type="text" pattern="\d*(\.\d+)?" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo Mage::helper('core')->quoteEscape($this->__('Qty')) ?>" class="input-text qty" />
+            </div>
+        <?php endif; ?>
+        <div class="add-to-cart-buttons">
+            <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+            <?php echo $this->getChildHtml('', true, true) ?>
+        </div>
+    </div>
+<?php endif; ?>
+    <?php }?>
