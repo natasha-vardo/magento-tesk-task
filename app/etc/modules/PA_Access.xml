@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <PA_Access>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends></depends>
+        </PA_Access>
+    </modules>
+</config>

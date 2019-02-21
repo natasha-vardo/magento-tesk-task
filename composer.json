@@ -1,0 +1,15 @@
+{
+    "name": "PA/Access",
+    "license": "OSL-3.0",
+    "type": "magento-module",
+    "description": "Magento test task",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    },
+    "authors":[
+        {
+            "name":"Natasha Vardomskaya",
+            "email":"nati_v@inbox.ru"
+        }
+    ]
+}

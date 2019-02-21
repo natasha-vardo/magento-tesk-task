@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <pa translate="label" module="access">
+            <label>Products Access</label>
+            <sort_order>10</sort_order>
+        </pa>
+    </tabs>
+    <sections>
+        <access translate="label" module="access">
+            <label>Restriction</label>
+            <tab>pa</tab>
+            <frontend>text</frontend>
+            <sort_order>1</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <settings>
+                    <label>Settings</label>
+                    <expanded>1</expanded>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_Website>1</show_in_Website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <restriction_category>
+                            <label>Restriction Category</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>GA_Access_Model_Adminhtml_System_Config_Source_Shopcategory</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </restriction_category>
+                        <start_restriction>
+                            <label>Start Time Restriction</label>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </start_restriction>
+                        <end_restriction>
+                            <label>End Time Restriction</label>
+                            <frontend_type>time</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </end_restriction>
+                    </fields>
+                </settings>
+            </groups>
+        </access>
+    </sections>
+</config>
