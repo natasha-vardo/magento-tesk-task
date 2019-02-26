@@ -2,18 +2,17 @@
 
 class PA_Access_Model_Adminhtml_System_Config_Source_Shopcategory
 {
-
     /**
      * @return array
      */
     public function toOptionArray(): array
     {
         $categories = Mage::getModel('catalog/category')->getCollection()->load();
-        $categoriesIdArray = [];
+        $categoriesId = [];
 
         foreach($categories as $category) {
             if ($category['level'] !== '0' && $category['level'] !== '1') {
-                $categoriesIdArray[] = [
+                $categoriesId[] = [
                     'value' => $category['entity_id']
                 ];
             }
@@ -21,10 +20,10 @@ class PA_Access_Model_Adminhtml_System_Config_Source_Shopcategory
 
         $options = [];
 
-        foreach ($categoriesIdArray as $id) {
-            $categoryInfo = Mage::getModel('catalog/category')->load($id['value']);
+        foreach ($categoriesId as $categoryId) {
+            $categoryInfo = Mage::getModel('catalog/category')->load($categoryId['value']);
             $options[] = [
-                'value' => $id['value'],
+                'value' => $categoryId['value'],
                 'label' => $categoryInfo->getName()
             ];
         }

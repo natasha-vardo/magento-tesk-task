@@ -1,17 +1,9 @@
 <?php
-
-    $startRestrictionFieldInfo = Mage::getStoreConfig('access/settings/start_restriction');
-    $endRestrictionFieldInfo = Mage::getStoreConfig('access/settings/end_restriction');
-
     $settingsRestrictionCategory = Mage::getStoreConfig('access/settings/restriction_category');
-    $restrictionCategory = explode(",", $settingsRestrictionCategory);
-
-    $startRestriction = strtr($startRestrictionFieldInfo, ",", ":");
-    $endRestriction = strtr($endRestrictionFieldInfo, ",", ":");
+    $restrictionCategory = explode(',', $settingsRestrictionCategory);
 
     $helper = Mage::helper('access');
-    $restriction = $helper->getRestriction($startRestriction, $endRestriction);
-
+    $restriction = $helper->getRestriction();
 ?>
 <?php
 /**
@@ -78,25 +70,25 @@ $_helper = $this->helper('catalog/output');
                                 </div>
                                 <div class="product-secondary">
                                     <?php
-                                        $categoryIds = Mage::getModel('catalog/product')->load($_product->getId())->getCategoryIds();
-                                        $isRestriction = $helper->isRestrictionCategory($categoryIds);
-                                        $restrictionCat = $helper->isRestrictionCategory($restrictionCategory);
+                                    $categoryIds = Mage::getModel('catalog/product')->load($_product->getId())->getCategoryIds();
+                                    $isRestriction = $helper->isRestrictionCategory($categoryIds);
+                                    $restrictionCat = $helper->isRestrictionCategory($restrictionCategory);
 
-                                        if ($restriction['currentDateTime'] >= $restriction['startDateTime']
-                                            && $restriction['currentDateTime'] <= $restriction['endDateTime'] && $isRestriction == $restrictionCat) {
-                                            echo '<strong>Sorry, you cant buy this product until '.substr($endRestriction, 0, -3).'</strong>';
-                                        } else if ($restriction['currentDateTime'] < $restriction['startDateTime']
-                                            && $restriction['currentDateTime'] < $restriction['previousDayEnd'] && $isRestriction == $restrictionCat) {
-                                            echo '<strong>Sorry, you cant buy this product until '.substr($endRestriction, 0, -3).'</strong>';
-                                        } else {
-                                    ?>
-                                    <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
-                                        <p class="action"><button type="button" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
-                                    <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
-                                        <p class="action"><a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a></p>
-                                    <?php else: ?>
-                                        <p class="action availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-                                    <?php endif; ?>
+                                    if ($restriction['currentDateTime'] >= $restriction['startDateTime']
+                                        && $restriction['currentDateTime'] <= $restriction['endDateTime'] && $isRestriction == $restrictionCat) {
+                                        echo '<strong>Sorry, you cant buy this product until '.substr($restriction['endDateTime'], 0, -3).'</strong>';
+                                    } else if ($restriction['currentDateTime'] < $restriction['startDateTime']
+                                        && $restriction['currentDateTime'] < $restriction['previousDayEnd'] && $isRestriction == $restrictionCat) {
+                                        echo '<strong>Sorry, you cant buy this product until '.substr($restriction['endDateTime'], 0, -3).'</strong>';
+                                    } else {
+                                        ?>
+                                        <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
+                                            <p class="action"><button type="button" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+                                        <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
+                                            <p class="action"><a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a></p>
+                                        <?php else: ?>
+                                            <p class="action availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                        <?php endif; ?>
                                     <?php   }?>
                                     <ul class="add-to-links">
                                         <?php if ($this->helper('wishlist')->isAllow()) : ?>
@@ -154,28 +146,28 @@ $_helper = $this->helper('catalog/output');
                                 <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
                             <?php endif; ?>
                             <div class="actions">
-                             <?php
-                                    $categoryIds = Mage::getModel('catalog/product')->load($_product->getId())->getCategoryIds();
-                                    $isRestriction = $helper->isRestrictionCategory($categoryIds);
-                                    $restrictionCat = $helper->isRestrictionCategory($restrictionCategory);
+                                <?php
+                                $categoryIds = Mage::getModel('catalog/product')->load($_product->getId())->getCategoryIds();
+                                $isRestriction = $helper->isRestrictionCategory($categoryIds);
+                                $restrictionCat = $helper->isRestrictionCategory($restrictionCategory);
 
-                                    if ($restriction['currentDateTime'] >= $restriction['startDateTime']
-                                        && $restriction['currentDateTime'] <= $restriction['endDateTime'] && $isRestriction == $restrictionCat) {
-                                        echo '<strong>Sorry, you cant buy this product until '.substr($endRestriction, 0, -3).'</strong>';
-                                    } else if ($restriction['currentDateTime'] < $restriction['startDateTime']
-                                        && $restriction['currentDateTime'] < $restriction['previousDayEnd'] && $isRestriction == $restrictionCat) {
-                                        echo '<strong>Sorry, you cant buy this product until '.substr($endRestriction, 0, -3).'</strong>';
-                                    } else {
-                              ?>
-                                <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
-                                    <button type="button" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
-                                        <span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
-                                <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
-                                    <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
-                                <?php else: ?>
-                                    <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-                                <?php endif; ?>
-                                    <?php   }?>
+                                if ($restriction['currentDateTime'] >= $restriction['startDateTime']
+                                    && $restriction['currentDateTime'] <= $restriction['endDateTime'] && $isRestriction == $restrictionCat) {
+                                    echo '<strong>Sorry, you cant buy this product until '.substr($restriction['endDateTime'], 0, -3).'</strong>';
+                                } else if ($restriction['currentDateTime'] < $restriction['startDateTime']
+                                    && $restriction['currentDateTime'] < $restriction['previousDayEnd'] && $isRestriction == $restrictionCat) {
+                                    echo '<strong>Sorry, you cant buy this product until '.substr($restriction['endDateTime'], 0, -3).'</strong>';
+                                } else {
+                                    ?>
+                                    <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
+                                        <button type="button" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                            <span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                                    <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
+                                        <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
+                                    <?php else: ?>
+                                        <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                                    <?php endif; ?>
+                                <?php   }?>
                                 <ul class="add-to-links">
                                     <?php if ($this->helper('wishlist')->isAllow()) : ?>
                                         <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>

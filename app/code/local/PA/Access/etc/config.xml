@@ -7,9 +7,9 @@
     </modules>
     <global>
         <blocks>
-            <pa_access>
+            <access>
                 <class>PA_Access_Block</class>
-            </pa_access>
+            </access>
             <catalog>
                 <rewrite>
                     <product_view>PA_Access_Block_Product_View</product_view>
@@ -23,21 +23,21 @@
             </catalog>
         </blocks>
         <helpers>
-            <pa_access>
+            <access>
                 <class>PA_Access_Helper</class>
-            </pa_access>
+            </access>
         </helpers>
         <models>
-            <pa_access>
+            <access>
                 <class>PA_Access_Model</class>
-            </pa_access>
+            </access>
         </models>
         <resources>
-            <pa_access_setup>
+            <access_setup>
                 <setup>
                     <module>PA_Access</module>
                 </setup>
-            </pa_access_setup>
+            </access_setup>
         </resources>
     </global>
     <frontend>
@@ -60,13 +60,13 @@
             </updates>
         </layout>
         <routers>
-            <pa_access>
+            <access>
                 <use>standard</use>
                 <args>
                     <frontName>access</frontName>
                     <module>PA_Access</module>
                 </args>
-            </pa_access>
+            </access>
         </routers>
     </frontend>
     <admin>
