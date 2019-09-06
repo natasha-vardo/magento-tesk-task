@@ -1,0 +1,4 @@
+app/code/local/PA/Access     app/code/local/PA/Access
+app/etc/modules/*    app/etc/modules/
+app/design/frontend/rwd/default/layout/*    app/design/frontend/rwd/default/layout/
+app/design/frontend/rwd/default/template/pa/*    app/design/frontend/rwd/default/template/pa/
